@@ -1,0 +1,7 @@
+click>=8.0.0
+pyyaml>=6.0
+requests>=2.25.0
+sqlalchemy>=2.0.0
+alembic>=1.7.0
+psycopg2-binary>=2.9.0
+pymysql>=1.0.0

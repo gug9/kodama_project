@@ -1,0 +1,70 @@
+project:
+  name: "note-app"
+  type: "backend"
+  language: "python"
+
+modules:
+  - name: "note_handler"
+    classes:
+      - name: "NoteManager"
+        methods:
+          - name: "create_note"
+            inputs: ["content", "title"]
+          - name: "get_notes"
+            depends_on: ["create_note"]
+          - name: "get_note_by_id"
+            inputs: ["note_id"]
+          - name: "update_note"
+            inputs: ["note_id", "content", "title"]
+            depends_on: ["get_note_by_id"]
+          - name: "delete_note"
+            inputs: ["note_id"]
+            depends_on: ["get_note_by_id"]
+  
+  - name: "user_handler"
+    classes:
+      - name: "UserManager"
+        methods:
+          - name: "register_user"
+            inputs: ["username", "email", "password"]
+          - name: "login_user"
+            inputs: ["email", "password"]
+          - name: "get_user_profile"
+            inputs: ["user_id"]
+            depends_on: ["login_user"]
+          - name: "update_user_profile"
+            inputs: ["user_id", "username", "email"]
+            depends_on: ["get_user_profile"]
+
+database:
+  engine: "sqlite"
+  tables:
+    - name: "notes"
+      fields:
+        - name: "id"
+          type: "uuid"
+        - name: "title"
+          type: "text"
+        - name: "content"
+          type: "text"
+        - name: "created_at"
+          type: "datetime"
+        - name: "updated_at"
+          type: "datetime"
+        - name: "user_id"
+          type: "uuid"
+    
+    - name: "users"
+      fields:
+        - name: "id"
+          type: "uuid"
+        - name: "username"
+          type: "text"
+        - name: "email"
+          type: "text"
+        - name: "password_hash"
+          type: "text"
+        - name: "created_at"
+          type: "datetime"
+        - name: "last_login"
+          type: "datetime"
